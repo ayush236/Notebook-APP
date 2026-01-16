@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { addTopastes, updateTopastes } from "../Redux/pasteSlice";
 
 const Home = () => {
   const [title, settitle] = useState("");
@@ -7,8 +9,34 @@ const Home = () => {
   // use to read the query string parameter of url
   const [searchParams, setSearchParams] = useSearchParams();
   const pasteId = searchParams.get("pasteId");
+  //to acces the reducer function in redux  we use dispatch
+  const dispatch = useDispatch();
 
-  function createPaste() {}
+  function createPaste() {
+    const paste ={
+        title: title,
+        contain: value,
+        _id: pasteId || Date.now().toString(36),
+        createdAt: new Date().toISOString(),
+    }
+    if(pasteId){
+        //update
+        dispatch(updateTopastes(paste));
+
+    }else{
+
+        //create 
+        dispatch(addTopastes(paste));
+    }
+
+    //after the creation or updation || clearning the states
+    setSearchParams('');
+    setvalue('');
+    settitle('')
+
+
+
+  }
 
   return (
     <div>
