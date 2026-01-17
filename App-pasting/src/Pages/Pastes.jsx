@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFrompastes } from "../Redux/pasteSlice";
+import toast from "react-hot-toast";
 
 const Pastes = () => {
   const Pastes = useSelector((state) => state.paste.pastes);
@@ -35,7 +36,8 @@ function handleDelete(pasteId){
               <div>{paste.title}</div>
               <div>{paste.contain}</div>
               <div className="flex gap-3  ">
-                <button className="bg-black text-white font-semibold p-3 rounded max-w-fit">
+                <button  
+                className="bg-black text-white font-semibold p-3 rounded max-w-fit">
                   Edit
                 </button>
                 <button 
@@ -46,10 +48,16 @@ function handleDelete(pasteId){
                 <button className="bg-black text-white font-semibold p-3 rounded max-w-fit">
                   view
                 </button>
-                <button className="bg-black text-white font-semibold p-3 rounded max-w-fit">
+                <button 
+                className="bg-black text-white font-semibold p-3 rounded max-w-fit">
                   share
                 </button>
-                <button className="bg-black text-white font-semibold p-3 rounded max-w-fit">
+                <button 
+                onClick={()=>{
+                  navigator.clipboard.writeText(paste?.contain)
+                  toast.success("copying is success")
+                }}
+                className="bg-black text-white font-semibold p-3 rounded max-w-fit">
                   copy
                 </button>
               </div>
